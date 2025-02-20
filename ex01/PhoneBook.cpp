@@ -183,13 +183,23 @@ void    PhoneBook::addContact()
         input.erase();
         i++;
     }
-    contacts[currentNb].setFirstName(info[0]);
-    contacts[currentNb].setLastName(info[1]);
-    contacts[currentNb].setNickName(info[2]);
-    contacts[currentNb].setPhoneNumber(info[3]);
-    contacts[currentNb].setDarkestSecret(info[4]);
-    setCurrentNb(currentNb + 1);
-    std::cout << "Contact " << currentNb << " Added Succesfully" << std::endl;
-    usleep(500000);
-    system("clear");
+    if (currentNb <= 7)
+    {
+        contacts[currentNb].setFirstName(info[0]);
+        contacts[currentNb].setLastName(info[1]);
+        contacts[currentNb].setNickName(info[2]);
+        contacts[currentNb].setPhoneNumber(info[3]);
+        contacts[currentNb].setDarkestSecret(info[4]);
+        setCurrentNb(currentNb + 1);
+        std::cout << "Contact " << currentNb << " Added Succesfully" << std::endl;
+        usleep(500000);
+        system("clear");
+    }
+    else
+    {
+        system("clear");
+        std::cout << "Phonebook full" << std::endl;
+        sleep(1);
+        system("clear");
+    }
 }
