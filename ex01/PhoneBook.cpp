@@ -117,7 +117,12 @@ void    PhoneBook::searchContact()
         {
             choiceNb = atoi(choice.c_str());
             if (choiceNb <= 0 || choiceNb > currentNb)
-                std::cout << "Number out of range" << std::endl;
+            {
+                std::cout << "Number out of range try searching again" << std::endl;
+                usleep(500000);
+                system("clear");
+                break ;
+            }
             else
             {
                 system("clear");
@@ -139,5 +144,52 @@ void    PhoneBook::searchContact()
 
 void    PhoneBook::addContact()
 {
-    std::cout << "ADD SUCCESS" << std::endl;
+    std::string fileds[5] = {
+        "Enter First Name : ",
+        "Enter Last Name : ",
+        "Enter Nick-Name : ",
+        "Enter Phone Number : ",
+        "Enter Darkest Secret : "};
+    std::string info[5];
+    std::string input;
+    int i;
+
+    i = 0;
+    while (i < 5)
+    {
+        std::cout << fileds[i] << std::endl;
+        getline(std::cin, input);
+        if (input.empty())
+        {
+            std::cout << "A contact cannot have an empty filed" << std::endl;
+            usleep(500000);
+            system("clear");
+            break ;
+        }
+        if (i == 3)
+        {
+            int j = 0; 
+            while (isnumber(input[j]))
+                j++;
+            if (j != input.length())
+            {
+                std::cout << "Phone number must be all digits" << std::endl;
+                usleep(500000);
+                system("clear");
+                break ;
+            }
+        }
+        info[i] = input;
+        input.erase();
+        i++;
+    }
+    contacts[currentNb].setFirstName(info[0]);
+    contacts[currentNb].setLastName(info[1]);
+    contacts[currentNb].setNickName(info[2]);
+    contacts[currentNb].setPhoneNumber(info[3]);
+    contacts[currentNb].setDarkestSecret(info[4]);
+    setCurrentNb(currentNb + 1);
+    std::cout << "Contact " << currentNb << " Added Succesfully" << std::endl;
+    usleep(500000);
+    system("clear");
 }
