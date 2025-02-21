@@ -183,7 +183,7 @@ void    PhoneBook::addContact()
         input.erase();
         i++;
     }
-    if (currentNb <= 7)
+    if (currentNb < 7)
     {
         contacts[currentNb].setFirstName(info[0]);
         contacts[currentNb].setLastName(info[1]);

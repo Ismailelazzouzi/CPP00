@@ -5,8 +5,8 @@
 class PhoneBook
 {
     int     currentNb;
-    public:
     Contact contacts[7];
+    public:
     int     getCurrentNb();
     void    setCurrentNb(int currentNb);
     void    searchContact();
