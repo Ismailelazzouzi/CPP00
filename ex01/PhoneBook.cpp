@@ -1,6 +1,5 @@
 #include "PhoneBook.hpp"
 
-
 void     PhoneBook::setCurrentNb(int currentNb)
 {
     this->currentNb = currentNb;
@@ -9,6 +8,36 @@ void     PhoneBook::setCurrentNb(int currentNb)
 int     PhoneBook::getCurrentNb()
 {
     return (this->currentNb);
+}
+
+int    PhoneBook::getIndex()
+{
+    return(this->index);
+}
+
+void    PhoneBook::setIndex(int index)
+{
+    this->index = index;
+}
+
+int    PhoneBook::get_oldest_index()
+{
+    for (size_t i = 0; i < 8; i++)
+    {
+        if (contacts[i].get_oldest() == 1)
+            return (i);
+    }
+    return (0);  
+}
+
+int     PhoneBook::getNumber()
+{
+    for (size_t i = 0; i < 7; i++)
+    {
+        if (contacts[i].getFirstName().length() < 1)
+            return (i);
+    }
+    return (0);
 }
 
 static  void    printEdited(std::string str)
@@ -95,7 +124,7 @@ static void printFields(Contact *contacts, int currentNb)
 
 void    PhoneBook::searchContact()
 {
-    system("clear");
+    //system("clear");
     std::string choice;
     int choiceNb;
 
@@ -107,6 +136,8 @@ void    PhoneBook::searchContact()
     else
     {
     printEntry();
+    if (currentNb >= 2)
+        setCurrentNb(2);
     printFields(PhoneBook::contacts, currentNb);
     while (1)
     {
@@ -120,12 +151,12 @@ void    PhoneBook::searchContact()
             {
                 std::cout << "Number out of range try searching again" << std::endl;
                 usleep(500000);
-                system("clear");
+                //system("clear");
                 break ;
             }
             else
             {
-                system("clear");
+                //system("clear");
                 std::cout << "First Name : " << PhoneBook::contacts[choiceNb - 1].getFirstName() << std::endl;
                 std::cout << "Last Name : " << PhoneBook::contacts[choiceNb - 1].getLastName() << std::endl;
                 std::cout << "Nick-Name : " << PhoneBook::contacts[choiceNb - 1].getNickName() << std::endl;
@@ -136,7 +167,12 @@ void    PhoneBook::searchContact()
             }
         }
         else
+        {
             std::cout << "No empty fields please" << std::endl;
+            usleep(500000);
+            system("clear");
+            break ;
+        }
         usleep(500000);
     }
     }
@@ -153,6 +189,7 @@ void    PhoneBook::addContact()
     std::string info[5];
     std::string input;
     int i;
+    int placeholder;
 
     i = 0;
     while (i < 5)
@@ -163,7 +200,7 @@ void    PhoneBook::addContact()
         {
             std::cout << "A contact cannot have an empty filed" << std::endl;
             usleep(500000);
-            system("clear");
+            //system("clear");
             break ;
         }
         if (i == 3)
@@ -175,7 +212,7 @@ void    PhoneBook::addContact()
             {
                 std::cout << "Phone number must be all digits" << std::endl;
                 usleep(500000);
-                system("clear");
+                //system("clear");
                 break ;
             }
         }
@@ -183,23 +220,44 @@ void    PhoneBook::addContact()
         input.erase();
         i++;
     }
-    if (currentNb < 7)
+    contacts[getIndex()].set_oldest(1);
+    if (currentNb >= 2)
+        setCurrentNb(0);
+    if (currentNb < 2)
     {
+        contacts[currentNb].getFirstName().erase();
+        contacts[currentNb].getLastName().erase();
+        contacts[currentNb].getNickName().erase();
+        contacts[currentNb].getPhoneNumber().erase();
+        contacts[currentNb].getDarkestSecret().erase();
         contacts[currentNb].setFirstName(info[0]);
         contacts[currentNb].setLastName(info[1]);
         contacts[currentNb].setNickName(info[2]);
         contacts[currentNb].setPhoneNumber(info[3]);
         contacts[currentNb].setDarkestSecret(info[4]);
-        setCurrentNb(currentNb + 1);
-        std::cout << "Contact " << currentNb << " Added Succesfully" << std::endl;
+        std::cout << "Contact Added Succesfully" << std::endl;
         usleep(500000);
-        system("clear");
+        //system("clear");
     }
-    else
+    else if (currentNb >= 2)
     {
-        system("clear");
-        std::cout << "Phonebook full" << std::endl;
-        sleep(1);
-        system("clear");
+        setIndex(get_oldest_index());
+        contacts[getIndex()].getFirstName().erase();
+        contacts[getIndex()].getLastName().erase();
+        contacts[getIndex()].getNickName().erase();
+        contacts[getIndex()].getPhoneNumber().erase();
+        contacts[getIndex()].getDarkestSecret().erase();
+        contacts[getIndex()].setFirstName(info[0]);
+        contacts[getIndex()].setLastName(info[1]);
+        contacts[getIndex()].setNickName(info[2]);
+        contacts[getIndex()].setPhoneNumber(info[3]);
+        contacts[getIndex()].setDarkestSecret(info[4]);
+        std::cout << "Contact Added Succesfully" << std::endl;
+        usleep(500000);
+        contacts[getIndex()].set_oldest(0);
+        setIndex(getIndex() + 1);
+        contacts[getIndex()].set_oldest(1);
+        // system("clear");
     }
+    setCurrentNb(getNumber());
 }

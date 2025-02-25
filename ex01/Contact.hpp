@@ -12,7 +12,10 @@ private:
     std::string nickName;
     std::string darkestSecret;
     std::string  phoneNumber;
+    bool        oldest;
 public:
+    int         get_oldest();
+    void        set_oldest(int oldest);
     std::string getFirstName();
     void        setFirstName(std::string firstName);
     std::string getLastName();

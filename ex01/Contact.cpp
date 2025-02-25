@@ -1,6 +1,16 @@
 #include "Contact.hpp"
 #include "PhoneBook.hpp"
 
+void    Contact::set_oldest(int oldest)
+{
+    this->oldest = oldest;
+}
+
+int    Contact::get_oldest()
+{
+    return (this->oldest);
+}
+
 std::string Contact::getFirstName()
 {
     return (this->firstName);

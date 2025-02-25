@@ -5,8 +5,13 @@
 class PhoneBook
 {
     int     currentNb;
-    Contact contacts[7];
+    int     index;
+    Contact contacts[8];
     public:
+    int     getNumber();
+    int     get_oldest_index();
+    int     getIndex();
+    void    setIndex(int index);
     int     getCurrentNb();
     void    setCurrentNb(int currentNb);
     void    searchContact();
